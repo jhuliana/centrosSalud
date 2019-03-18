@@ -8,6 +8,7 @@
 * 
 
 ### Modelo en protege
+![protege](https://user-images.githubusercontent.com/19150432/54550774-b13e5200-497a-11e9-954e-b97e127d0485.jpeg)
 
 
 
