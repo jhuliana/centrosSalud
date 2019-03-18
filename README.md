@@ -20,6 +20,8 @@
 
 ### Propiedades de datos
 
+![propiedadesDatos](https://user-images.githubusercontent.com/19150432/54551817-c74d1200-497c-11e9-91c4-a07561b5c71d.jpeg)
+
 
 
 ### Tripletas de Jena
