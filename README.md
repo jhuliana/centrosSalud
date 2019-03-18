@@ -62,41 +62,105 @@ Para la generación de las tripletas se uso la librería Jena con el lenguaje de
  
 
 
-### Generación de Tripletas RDF
-package javaapplication24;
+### Lectura  del modelo ontológico 
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
-import java.io.BufferedReader;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.vocabulary.RDF;
-import org.apache.jena.vocabulary.RDFS;
-import org.apache.jena.rdf.model.RDFWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import org.apache.jena.ontology.OntClass;
-import org.apache.jena.util.FileManager;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.ontology.OntProperty;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
-import org.apache.jena.shared.JenaException;
-import org.apache.jena.util.iterator.ExtendedIterator;
-import static org.apache.jena.vocabulary.DCAT.Dataset;
+      public static OntModel getOntologyModel(String ontoFile) {
+        OntModel ontoModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);//OWL_MEM, null o OWL_MEM_RULE_INF
+
+        try {
+            java.io.InputStream in = FileManager.get().open(ontoFile);
+            if (in == null) {
+                throw new IllegalArgumentException("Archivo no encontrado");
+            }
+            try {
+                ontoModel.read(in, "");
+            } catch (Exception e) {
+            }
+            LOGGER.log(Level.INFO, "Ontology {0} loaded.", ontoFile);
+        } catch (JenaException je) {
+            System.err.println("ERROR" + je.getMessage());
+            System.exit(0);
+        }
+        return ontoModel;
+    }
+    
+### Lectura de datasets
+      //lectura del archivo de especialidades
+        ArrayList<String> ArchEspecialidades = new ArrayList<String>();
+        BufferedReader br2 = null;
+        br2 = new BufferedReader(new FileReader("especialidades.csv"));
+        String line2 = br2.readLine();
+        while (null != line2) {
+            String[] fields2 = line2.split(";");
+            line2 = br2.readLine();
+            for (int i = 0; i < fields2.length; i += 2) {
+                ArchEspecialidades.add(fields2[i]);
+            }
+        }
+
+        //lectura del árchivo de códigos
+        ArrayList<String> bloque = new ArrayList<String>();
+        BufferedReader br1 = null;
+        br1 = new BufferedReader(new FileReader("codigo.csv"));
+        String line1 = br1.readLine();
+        while (null != line1) {
+            String[] fields1 = line1.split(";");
+            line1 = br1.readLine();
+            for (int i = 0; i < fields1.length; i += 2) {
+                bloque.add(fields1[i]);
+                bloque.add(fields1[i + 1]);
+            }
+        }
+        //lectura del archivo de datos de centros
+        BufferedReader br = null;
+        br = new BufferedReader(new FileReader("pruebaUnion.csv"));
+        String line = br.readLine();
+        while (null != line) {
+            CentroSalud centro = new CentroSalud();
+            String[] fields = line.split(";");
+            line = br.readLine();
+            //System.out.println(line);
+            ArrayList<String> especialidad = new ArrayList<String>();
+            ArrayList<String> descBloque = new ArrayList<String>();
+            int h, k, l;
+            for (int i = 0; i < fields.length; i += 50) {
+                centro.setAnio(fields[i]);
+                centro.setNombCentro(fields[i + 1]);
+                centro.setId(fields[i + 2]);
+                centro.setProvincia(fields[i + 3]);
+                centro.setCanton(fields[i + 4]);
+                centro.setParroquia(fields[i + 5]);
+                centro.setPais(fields[i + 6]);
+                centro.setCategoria(fields[i + 7]);
+                centro.setTipo(fields[i + 8]);
+                centro.setDepartamento(fields[i + 9]);
+                centro.setSector(fields[i + 10]);
+                h = 12;
+                for (int j = 0; j < 16; j++) {
+                    especialidad.add(ArchEspecialidades.get(j));
+                    especialidad.add(fields[i + h]);
+                    h++;
+                }
+                centro.setCantEspecialistas(especialidad);
+                centro.setFuente1(fields[i + 28]);
+                centro.setResiduos(fields[i + 29]);
+                k = 30;
+                l = 0;
+                for (int j = 0; j < 18; j++) {
+                    descBloque.add(bloque.get(l));
+                    descBloque.add(bloque.get(l + 1));
+                    descBloque.add(fields[i + k]);
+                    k++;
+                    l += 2;
+                }
+                centro.setCantBloque(descBloque);
+                centro.setbloqueNombre("Bloque_16");
+                centro.setArea(fields[i + 48]);
+                centro.setFuente2(fields[i + 49]);
+            }
+            centros.add(centro);
+        }
+### Generación de Tripletas RDF
 
 public class JavaApplication24 {
 
@@ -249,7 +313,7 @@ public class JavaApplication24 {
             while (iteratorPropiedades.hasNext()) {
                 OntProperty ontProperty1 = (OntProperty) iteratorPropiedades.next();
                 prop.add(ontProperty1);
-//                System.out.println("\t" + ontProperty1);
+
             }
         }
 
