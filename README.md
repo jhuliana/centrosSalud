@@ -11,7 +11,8 @@
 ![protege](https://user-images.githubusercontent.com/19150432/54550774-b13e5200-497a-11e9-954e-b97e127d0485.jpeg)
 
 
-
+### Clases creadas en protege
+![protege](https://photos.google.com/u/2/search/_tra_/photo/AF1QipOLZKEhYZz8mnvesOHeK124iuSj9HB5_45-4eP9)
 ### Propiedades de objetos
 
 
