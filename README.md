@@ -12,7 +12,9 @@
 
 
 ### Clases creadas en protege
-![protege](https://photos.google.com/u/2/search/_tra_/photo/AF1QipOLZKEhYZz8mnvesOHeK124iuSj9HB5_45-4eP9)
+
+![clases](https://user-images.githubusercontent.com/19150432/54551576-5ad21300-497c-11e9-994d-be71280c69fd.jpeg)
+
 ### Propiedades de objetos
 
 
