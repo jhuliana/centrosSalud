@@ -162,7 +162,7 @@ Para la generación de las tripletas se uso la librería Jena con el lenguaje de
         }
 ### Generación de Tripletas RDF
 
-public class JavaApplication24 {
+
 
     public static OntModel getOntologyModel(String ontoFile) {
         OntModel ontoModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);//OWL_MEM, null o OWL_MEM_RULE_INF
@@ -223,85 +223,7 @@ public class JavaApplication24 {
         String ontoPrefix = "http://centrosalud.org/ontology#";
         dboModel.setNsPrefix("Onto", dataPrefix);
 
-        //lectura del archivo de especialidades
-        ArrayList<String> ArchEspecialidades = new ArrayList<String>();
-        BufferedReader br2 = null;
-        br2 = new BufferedReader(new FileReader("especialidades.csv"));
-        String line2 = br2.readLine();
-        while (null != line2) {
-            String[] fields2 = line2.split(";");
-            line2 = br2.readLine();
-            for (int i = 0; i < fields2.length; i += 2) {
-                ArchEspecialidades.add(fields2[i]);
-            }
-        }
-
-        //lectura del árchivo de códigos
-        ArrayList<String> bloque = new ArrayList<String>();
-        BufferedReader br1 = null;
-        br1 = new BufferedReader(new FileReader("codigo.csv"));
-        String line1 = br1.readLine();
-        while (null != line1) {
-            String[] fields1 = line1.split(";");
-            line1 = br1.readLine();
-            for (int i = 0; i < fields1.length; i += 2) {
-                bloque.add(fields1[i]);
-                bloque.add(fields1[i + 1]);
-            }
-        }
-        //lectura del archivo de datos de centros
-        BufferedReader br = null;
-        br = new BufferedReader(new FileReader("pruebaUnion.csv"));
-        String line = br.readLine();
-        while (null != line) {
-            CentroSalud centro = new CentroSalud();
-            String[] fields = line.split(";");
-            line = br.readLine();
-            //System.out.println(line);
-            ArrayList<String> especialidad = new ArrayList<String>();
-            ArrayList<String> descBloque = new ArrayList<String>();
-            int h, k, l;
-            for (int i = 0; i < fields.length; i += 50) {
-                centro.setAnio(fields[i]);
-                centro.setNombCentro(fields[i + 1]);
-                centro.setId(fields[i + 2]);
-                centro.setProvincia(fields[i + 3]);
-                centro.setCanton(fields[i + 4]);
-                centro.setParroquia(fields[i + 5]);
-                centro.setPais(fields[i + 6]);
-                centro.setCategoria(fields[i + 7]);
-                centro.setTipo(fields[i + 8]);
-                centro.setDepartamento(fields[i + 9]);
-                centro.setSector(fields[i + 10]);
-                h = 12;
-                for (int j = 0; j < 16; j++) {
-                    especialidad.add(ArchEspecialidades.get(j));
-                    especialidad.add(fields[i + h]);
-                    h++;
-                }
-                centro.setCantEspecialistas(especialidad);
-                centro.setFuente1(fields[i + 28]);
-                centro.setResiduos(fields[i + 29]);
-                k = 30;
-                l = 0;
-                for (int j = 0; j < 18; j++) {
-                    descBloque.add(bloque.get(l));
-                    descBloque.add(bloque.get(l + 1));
-                    descBloque.add(fields[i + k]);
-                    k++;
-                    l += 2;
-                }
-                centro.setCantBloque(descBloque);
-                centro.setbloqueNombre("Bloque_16");
-                centro.setArea(fields[i + 48]);
-                centro.setFuente2(fields[i + 49]);
-            }
-            centros.add(centro);
-        }
-        if (null != br) {
-            br.close();
-        }
-
+        
         ///***********Presentar clases y propiedades*************
         ArrayList<OntClass> clas = new ArrayList<>();
         ArrayList<OntProperty> prop = new ArrayList<>();
@@ -416,5 +338,5 @@ public class JavaApplication24 {
 
     }
 
-}
+ 
 
