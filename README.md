@@ -17,6 +17,7 @@
 
 ### Propiedades de objetos
 
+![propiedadesObjetos](https://user-images.githubusercontent.com/19150432/54551876-e77cd100-497c-11e9-9a57-cd2e9486f894.jpeg)
 
 ### Propiedades de datos
 
