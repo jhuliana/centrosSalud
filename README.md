@@ -339,4 +339,8 @@ Para la generación de las tripletas se uso la librería Jena con el lenguaje de
     }
 
  
+### Aplicación en Java con interfaz
+La aplicación le permite al usuario buscar los centros de salud por sector.
+
+* Al momento de seleccionar un sector la aplicación presenta una lista con los centros de salud correspondientes:
 
