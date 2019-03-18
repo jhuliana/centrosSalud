@@ -345,3 +345,6 @@ La aplicación le permite al usuario buscar los centros de salud por sector.
 * Al momento de seleccionar un sector la aplicación presenta una lista con los centros de salud correspondientes:
 
 ![centroSalud1](https://user-images.githubusercontent.com/19150432/54553515-590a4e80-4980-11e9-8329-e3d4e0a310af.jpeg)
+
+
+![centroSalud2](https://user-images.githubusercontent.com/19150432/54553553-70493c00-4980-11e9-95c0-04ff60e24c46.jpeg)
